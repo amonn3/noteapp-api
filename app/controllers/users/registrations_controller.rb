@@ -4,24 +4,26 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   # Sobrescreve o método create do Devise
   def create
+    # Guard clause para email duplicado
+    if User.exists?(email: sign_up_params[:email])
+      return render json: {
+        message: "Email já está em uso"
+      }, status: :ok
+    end
+
     build_resource(sign_up_params)
-    
     resource.save
 
     if resource.persisted?
       render json: {
-        status: { code: 200, message: 'Conta criada com sucesso.' },
-        data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
+        message: 'Conta criada com sucesso.',
+        user_data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
       }, status: :ok
     else
       render json: {
-        status: { message: "Erro ao criar conta: #{resource.errors.full_messages.to_sentence}" }
+        message: "Erro ao criar conta: #{resource.errors.full_messages.to_sentence}"
       }, status: :unprocessable_entity
     end
-  end
-
-  def sign_up(resource_name, resource)
-    true
   end
 
   def set_flash_message(key, kind, options = {})
