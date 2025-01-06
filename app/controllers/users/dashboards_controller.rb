@@ -1,5 +1,5 @@
 class Users::DashboardsController < ApplicationController
-  before_action :check_authentication
+  before_action :authenticate_user!
   def index
     render json: { message: "Welcome #{current_user.name} you're logged in!" }
   end
