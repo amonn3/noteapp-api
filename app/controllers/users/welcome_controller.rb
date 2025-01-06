@@ -1,6 +1,9 @@
 class Users::WelcomeController < ApplicationController
-  skip_before_action :authenticate_user!
+  before_action :authenticate_user!
   def welcome
-    render json: { message: 'Bem-vindo ao NoteApp 🚀' }
+    render json: 
+    { message: 'Bem-vindo ao NoteApp 🚀',
+      user: current_user
+    }, status: :ok
   end
 end
