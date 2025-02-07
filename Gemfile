@@ -16,6 +16,8 @@ gem "devise-jwt"
 gem 'jsonapi-serializer'
 gem 'byebug'
 gem 'rack-cors'
+gem 'email_validator'
+gem 'mongo'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
@@ -37,6 +39,8 @@ gem "bootsnap", require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem "rack-cors"
+
+gem "dotenv-rails"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

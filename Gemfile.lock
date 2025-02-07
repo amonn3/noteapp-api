@@ -88,6 +88,10 @@ GEM
     devise-jwt (0.12.1)
       devise (~> 4.0)
       warden-jwt_auth (~> 0.10)
+    dotenv (3.1.7)
+    dotenv-rails (3.1.7)
+      dotenv (= 3.1.7)
+      railties (>= 6.1)
     dry-auto_inject (1.0.1)
       dry-core (~> 1.0)
       zeitwerk (~> 2.6)
@@ -98,6 +102,8 @@ GEM
       concurrent-ruby (~> 1.0)
       logger
       zeitwerk (~> 2.6)
+    email_validator (2.2.4)
+      activemodel
     erubi (1.13.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
@@ -216,7 +222,10 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  dotenv-rails
+  email_validator
   jsonapi-serializer
+  mongo
   mongoid
   puma (~> 5.0)
   rack-cors
