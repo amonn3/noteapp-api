@@ -1,16 +1,22 @@
 development:
   clients:
     default:
-      uri: mongodb://localhost:27017/noteapp_development
+      uri: <%= ENV['MONGODB_URI'] %>
       options:
         server_selection_timeout: 5
+        logger: false
+        log_level: :warn
+        monitoring: false
 
 test:
   clients:
     default:
-      uri: mongodb://localhost:27017/noteapp_test
+      uri: <%= ENV['MONGODB_URI'] %>
       options:
         server_selection_timeout: 5
+        logger: false
+        log_level: :warn
+        monitoring: false
 
 production:
   clients:
@@ -18,3 +24,6 @@ production:
       uri: <%= ENV['MONGODB_URI'] %>
       options:
         server_selection_timeout: 5
+        logger: false
+        log_level: :warn
+        monitoring: false
