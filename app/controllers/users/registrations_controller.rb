@@ -4,24 +4,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   # Sobrescreve o método create do Devise
   def create
-    # Guard clause para email duplicado
-    if User.exists?(email: sign_up_params[:email])
+    create_service = Users::CreateService.new(sign_up_params: sign_up_params).call
+
+    if params_nil?
       return render json: {
-        message: "Email já está em uso"
-      }, status: :ok
+        message: "Todos os campos são obrigatórios"
+      }, status: :unprocessable_entity
     end
 
-    build_resource(sign_up_params)
-    resource.save
-
-    if resource.persisted?
+    if create_service.success?
       render json: {
-        message: 'Conta criada com sucesso.',
-        user_data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
-      }, status: :ok
+        message: "Conta criada com sucesso",
+        user_data: create_service.user
+      }, status: :created
     else
       render json: {
-        message: "Erro ao criar conta: #{resource.errors.full_messages.to_sentence}"
+        message: "#{create_service.instance_variable_get("@error").first.to_s}"
       }, status: :unprocessable_entity
     end
   end
@@ -31,6 +29,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   protected
+
+  def params_nil?
+    (params[:user][:name].nil? || params[:user][:password].nil? || params[:user][:email].nil? )
+  end
 
   def sign_up_params
     params.require(:user).permit(:email, :password, :name)
