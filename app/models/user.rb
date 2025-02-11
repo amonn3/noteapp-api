@@ -12,7 +12,8 @@ class User
   field :name, type: String
   field :email,              type: String, default: ""
   field :encrypted_password, type: String, default: ""
-  field :notes, type: Array, default: []
+
+  has_many :notes
 
   ## recoverable
   field :reset_password_token,   type: String
