@@ -12,15 +12,18 @@ Rails.application.routes.draw do
     },
   defaults: { format: :json }
 
+  
   get '/protected', to: 'users/protected#index'
-
+  
   get '/health', to: 'health#show'
-
+  
   namespace :users do
     get '/protected', to: 'protected#index'
     get '/welcome', to: 'welcome#welcome'
     root to: 'welcome#welcome'
     get '/dashboards', to: 'dashboards#index'
+    
+    resources :notes, only: [:index, :show, :create, :update, :destroy]
   end
 
 end
