@@ -33,9 +33,11 @@ module Users
     end
 
     def destroy
-      @note = current_user.notes.find(params[:id])
-      @note.destroy
-      render json: {message: "Note deleted successfully"}, status: :no_content
+      if @note.destroy
+        render json: {}, status: :no_content
+      else
+        render json: {error: "Erro ao deletar nota. Tente novamente."}, status: :unprocessable_entity
+      end
     end
 
     private
@@ -45,7 +47,12 @@ module Users
     end
 
     def set_note
-      @note = current_user.notes.find(params[:id])
+      begin
+        @note = current_user.notes.find(params[:id])
+      rescue Mongoid::Errors::DocumentNotFound
+        @note = nil
+        render json: {error: "Nota não encontrada."}, status: :not_found
+      end
     end
   end
 end
