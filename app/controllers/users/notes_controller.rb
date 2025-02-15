@@ -17,7 +17,7 @@ module Users
     def create
       create_service = Notes::CreateService.new(current_user, note_params).call
       if create_service.success?
-        render json: {data: create_service.note}, status: :created
+        render json: {note: create_service.note}, status: :created
       else
         render json: {error: create_service.error}, status: :unprocessable_entity
       end
