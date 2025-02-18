@@ -6,12 +6,12 @@ module Users
 
     def index
       @notes = current_user.notes
-      render json: {data: @notes}, status: :ok
+      render json: {notes: @notes}, status: :ok
     end
 
     def show
       @note = current_user.notes.find(params[:id])
-      render json: {data: @note}, status: :ok
+      render json: {note: @note}, status: :ok
     end
 
     def create
